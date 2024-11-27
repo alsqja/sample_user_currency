@@ -52,4 +52,8 @@ public class UserCurrency extends BaseEntity {
     }
 
     public UserCurrency() {}
+
+    public void updateStatus (CurrencyStatus status) {
+        this.status = status;
+    }
 }

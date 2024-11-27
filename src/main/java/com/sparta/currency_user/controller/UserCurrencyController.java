@@ -6,6 +6,8 @@ import com.sparta.currency_user.service.UserCurrencyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,5 +23,10 @@ public class UserCurrencyController {
     @PostMapping
     public ResponseEntity<UserCurrencyResDto> createUserCurrency(@RequestBody CreateUserCurrencyReqDto dto) {
         return new ResponseEntity<>(userCurrencyService.save(dto), HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserCurrencyResDto> updateUserCurrency(@PathVariable Long id) {
+        return new ResponseEntity<>(userCurrencyService.update(id), HttpStatus.OK);
     }
 }

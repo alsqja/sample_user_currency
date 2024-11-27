@@ -10,7 +10,10 @@ import com.sparta.currency_user.repository.CurrencyRepository;
 import com.sparta.currency_user.repository.UserCurrencyRepository;
 import com.sparta.currency_user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -43,5 +46,16 @@ public class UserCurrencyService {
         User findUser = userRepository.findByIdOrElseThrow(id);
 
         return userCurrencyRepository.findByUser(findUser).stream().map(UserCurrencyResDto::new).toList();
+    }
+
+    @Transactional
+    public UserCurrencyResDto update(Long id) {
+        UserCurrency findUserCurrency = userCurrencyRepository.findByIdOrElseThrow(id);
+
+        if (findUserCurrency.getStatus().equals(CurrencyStatus.NORMAL)) {
+            findUserCurrency.updateStatus(CurrencyStatus.CANCELLED);
+            return new UserCurrencyResDto(findUserCurrency);
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "the request is already cancelled");
     }
 }
