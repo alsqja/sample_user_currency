@@ -17,11 +17,7 @@ public class CurrencyService {
     private final CurrencyRepository currencyRepository;
 
     public CurrencyResponseDto findById(Long id) {
-        return new CurrencyResponseDto(findCurrencyById(id));
-    }
-
-    public Currency findCurrencyById(Long id) {
-        return currencyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("통화를 찾을 수 없습니다."));
+        return new CurrencyResponseDto(currencyRepository.findByIdOrElseThrow(id));
     }
 
     public List<CurrencyResponseDto> findAll() {
@@ -30,7 +26,7 @@ public class CurrencyService {
 
     @Transactional
     public CurrencyResponseDto save(CurrencyRequestDto currencyRequestDto) {
-        Currency savedCurrency = currencyRepository.save(currencyRequestDto.toEntity());
-        return new CurrencyResponseDto(savedCurrency);
+
+        return new CurrencyResponseDto(currencyRepository.save(currencyRequestDto.toEntity()));
     }
 }

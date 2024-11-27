@@ -15,12 +15,9 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
+    //  다른 service 에서의 사용을 위해 findUserById 메서드 삭제 후 userRepository 에 findByIdOrElseThrow 추가
     public UserResponseDto findById(Long id) {
-        return new UserResponseDto(findUserById(id));
-    }
-
-    public User findUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        return new UserResponseDto(userRepository.findByIdOrElseThrow(id));
     }
 
     public List<UserResponseDto> findAll() {
@@ -35,7 +32,8 @@ public class UserService {
 
     @Transactional
     public void deleteUserById(Long id) {
-        this.findUserById(id);
+        userRepository.findByIdOrElseThrow(id);
+
         userRepository.deleteById(id);
     }
 

@@ -12,6 +12,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -26,17 +29,27 @@ public class UserCurrency extends BaseEntity {
     private int amountInKrw;
 
     @Column(nullable = false)
-    private double amountAfterExchange;
+    private BigDecimal amountAfterExchange;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CurrencyStatus status;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "to_currency_id")
     private Currency currency;
+
+    public UserCurrency(int amountInKrw, BigDecimal amountAfterExchange, CurrencyStatus status) {
+        this.amountInKrw = amountInKrw;
+        this.amountAfterExchange = amountAfterExchange;
+        this.status = status;
+    }
+
+    public UserCurrency() {}
 }
