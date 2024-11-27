@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +37,11 @@ public class UserCurrencyService {
         saveUserCurrency.setCurrency(findCurrency);
 
         return new UserCurrencyResDto(userCurrencyRepository.save(saveUserCurrency));
+    }
+
+    public List<UserCurrencyResDto> findAll(Long id) {
+        User findUser = userRepository.findByIdOrElseThrow(id);
+
+        return userCurrencyRepository.findByUser(findUser).stream().map(UserCurrencyResDto::new).toList();
     }
 }
