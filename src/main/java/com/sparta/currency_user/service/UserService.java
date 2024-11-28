@@ -5,8 +5,10 @@ import com.sparta.currency_user.dto.UserResponseDto;
 import com.sparta.currency_user.entity.User;
 import com.sparta.currency_user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,6 +28,10 @@ public class UserService {
 
     @Transactional
     public UserResponseDto save(UserRequestDto userRequestDto) {
+        if (userRepository.existsByEmail(userRequestDto.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email already exists");
+        }
+
         User savedUser = userRepository.save(userRequestDto.toEntity());
         return new UserResponseDto(savedUser);
     }

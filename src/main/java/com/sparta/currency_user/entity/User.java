@@ -14,6 +14,8 @@ public class User extends BaseEntity {
     private Long id;
 
     private String name;
+
+    @Column(name = "email", unique = true)
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
