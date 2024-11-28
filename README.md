@@ -14,6 +14,7 @@ MySQL : Ver 8.1.0
 
 
 # API
+[API 링크](https://documenter.getpostman.com/view/18429295/2sAYBXBr72)
 
 # 기능
 ## Lv 1. 고객(User)과 통화(Currency) 복잡한 연관관계 `필수`
