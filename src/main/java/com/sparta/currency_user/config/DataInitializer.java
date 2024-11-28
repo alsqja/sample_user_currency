@@ -29,9 +29,13 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
-        Currency currency = new Currency("dollar", new BigDecimal("1394.59"), "$");
+        Currency dollar = new Currency("Dollar", new BigDecimal("1394.59"), "$");
 
-        currencyRepository.save(currency);
+        currencyRepository.save(dollar);
+
+        Currency yen = new Currency("Yen", new BigDecimal("9.20"), "¥");
+
+        currencyRepository.save(yen);
 
         Currency invalidCurrency = new Currency("invalid", new BigDecimal("0"), "x");
 
@@ -44,17 +48,28 @@ public class DataInitializer {
 
         for (int i = 0; i < 30; i++) {
             int krw = 10000 * (int) (Math.random() * 10);
-            BigDecimal afterExchange = new BigDecimal(krw).divide(new BigDecimal("1394.59"), 2, RoundingMode.HALF_EVEN);
-            UserCurrency userCurrency = new UserCurrency(krw, afterExchange, CurrencyStatus.NORMAL);
 
-            Long userId = (long) (int) (Math.random() * 29) + 1;
-            User findUser = userRepository.findByIdOrElseThrow(userId);
-            userCurrency.setUser(findUser);
-            userCurrency.setCurrency(currency);
+            Long currencyId = (long) (int) (Math.random() * 2 + 1);
 
-            userCurrencyRepository.save(userCurrency);
+            if (currencyId.equals((long) 1)) {
+                extracted(krw, dollar);
+            } else if (currencyId.equals((long) 2)) {
+                extracted(krw, yen);
+            }
         }
         log.info("===== Test Data Initialized =====");
+    }
+
+    private void extracted(int krw, Currency dollar) {
+        BigDecimal afterExchange = new BigDecimal(krw).divide(dollar.getExchangeRate(), 2, RoundingMode.HALF_EVEN);
+        UserCurrency userCurrency = new UserCurrency(krw, afterExchange, CurrencyStatus.NORMAL);
+
+        Long userId = (long) (int) (Math.random() * 29) + 1;
+        User findUser = userRepository.findByIdOrElseThrow(userId);
+        userCurrency.setUser(findUser);
+        userCurrency.setCurrency(dollar);
+
+        userCurrencyRepository.save(userCurrency);
     }
 
 }

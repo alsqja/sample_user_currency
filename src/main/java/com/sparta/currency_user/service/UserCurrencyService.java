@@ -61,7 +61,8 @@ public class UserCurrencyService {
     }
 
     public TotalCurrencyResDto findGroupUserCurrency(Long id) {
+        User findUser = userRepository.findByIdOrElseThrow(id);
+
         return userCurrencyRepository.findTotalCurrency(id);
-//        return null;
     }
 }
