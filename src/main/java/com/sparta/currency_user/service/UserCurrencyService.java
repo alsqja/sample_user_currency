@@ -1,6 +1,7 @@
 package com.sparta.currency_user.service;
 
 import com.sparta.currency_user.dto.CreateUserCurrencyReqDto;
+import com.sparta.currency_user.dto.TotalCurrencyResDto;
 import com.sparta.currency_user.dto.UserCurrencyResDto;
 import com.sparta.currency_user.entity.Currency;
 import com.sparta.currency_user.entity.User;
@@ -57,5 +58,10 @@ public class UserCurrencyService {
             return new UserCurrencyResDto(findUserCurrency);
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "the request is already cancelled");
+    }
+
+    public TotalCurrencyResDto findGroupUserCurrency(Long id) {
+        return userCurrencyRepository.findTotalCurrency(id);
+//        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.sparta.currency_user.controller;
 
+import com.sparta.currency_user.dto.TotalCurrencyResDto;
 import com.sparta.currency_user.dto.UserCurrencyResDto;
 import com.sparta.currency_user.dto.UserRequestDto;
 import com.sparta.currency_user.dto.UserResponseDto;
@@ -46,5 +47,10 @@ public class UserController {
     @GetMapping("/{id}/user-currency")
     public ResponseEntity<List<UserCurrencyResDto>> findAllUserCurrency(@PathVariable Long id) {
         return new ResponseEntity<>(userCurrencyService.findAll(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/total-currencies")
+    public ResponseEntity<TotalCurrencyResDto> findGroupUserCurrency(@PathVariable Long id) {
+        return new ResponseEntity<>(userCurrencyService.findGroupUserCurrency(id), HttpStatus.OK);
     }
 }

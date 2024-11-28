@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Slf4j
 @Component
@@ -42,7 +43,9 @@ public class DataInitializer {
         }
 
         for (int i = 0; i < 30; i++) {
-            UserCurrency userCurrency = new UserCurrency(10000 * (int) (Math.random() * 10), new BigDecimal("1394.59"), CurrencyStatus.NORMAL);
+            int krw = 10000 * (int) (Math.random() * 10);
+            BigDecimal afterExchange = new BigDecimal(krw).divide(new BigDecimal("1394.59"), 2, RoundingMode.HALF_EVEN);
+            UserCurrency userCurrency = new UserCurrency(krw, afterExchange, CurrencyStatus.NORMAL);
 
             Long userId = (long) (int) (Math.random() * 29) + 1;
             User findUser = userRepository.findByIdOrElseThrow(userId);
