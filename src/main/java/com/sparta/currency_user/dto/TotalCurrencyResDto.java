@@ -14,7 +14,7 @@ public class TotalCurrencyResDto {
     public TotalCurrencyResDto(Long count, Number totalAmountInKrw) {
         this.count = count;
         this.totalAmountInKrw = totalAmountInKrw instanceof BigDecimal
-                ? (BigDecimal) ((BigDecimal) totalAmountInKrw).setScale(2, RoundingMode.HALF_EVEN)
+                ? ((BigDecimal) totalAmountInKrw).setScale(2, RoundingMode.HALF_EVEN)
                 : BigDecimal.valueOf(totalAmountInKrw.doubleValue()).setScale(2, RoundingMode.HALF_EVEN);
     }
 }

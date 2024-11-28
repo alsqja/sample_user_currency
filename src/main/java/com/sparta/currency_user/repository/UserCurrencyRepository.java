@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface UserCurrencyRepository extends JpaRepository<UserCurrency, Long> {

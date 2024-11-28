@@ -47,7 +47,7 @@ public class DataInitializer {
         }
 
         for (int i = 0; i < 30; i++) {
-            int krw = 10000 * (int) (Math.random() * 10);
+            int krw = 10000 * (int) (Math.random() * 10 + 1);
 
             Long currencyId = (long) (int) (Math.random() * 2 + 1);
 
