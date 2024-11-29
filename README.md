@@ -85,3 +85,5 @@ MySQL : Ver 8.1.0
 - [x]  현재는 달러를 기준으로 개발하였습니다. 그래서 다른 통화로 환전하면 자리수가 맞지 않는 경우가 존재합니다.
     - [x]  각 통화마다 다른 자리수를 적용하도록 개발합니다.
 
+# Trouble Shooting
+[BigDecimal](https://velog.io/@alsqja2626/Java-BigDecimal)
